@@ -1,0 +1,192 @@
+:root {
+    --grass-bg-color: #BCE1DB;/* Hintergrundfarbe für Gras-Pokémon */
+    --grass-dark: #2D7468;
+    --poison-dark : #C852BC;
+    --h2-color: #333333;/* Farbe für h2-Tags */
+    --copy-color: #333333;
+    --h3-grass: #2d7468;
+}
+
+body {
+    margin: 0;
+    font-family: 'Exo', sans-serif;
+    color: var(--copy-color)
+}
+
+h1 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 500;
+}
+
+h2 {
+    color: var(--h2-color);
+    font-size: 24px;
+}
+
+h2::first-letter {
+    text-transform: uppercase;
+}
+
+h3 {
+    color: var(--h3-grass);
+    font-size: 20px;
+    font-weight: 600;
+    margin:0; 
+}
+
+#pokecard {
+    min-height: 200px;
+    width: 100%;
+    color: var(--copy-color);
+    
+
+
+}
+
+/* |||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||   Card-Hero       |||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||  */
+
+#card-hero {
+    display: flex;
+    background-color: var(--grass-bg-color);
+    height: 200px;
+    padding: 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+
+#card-hero-image {
+    height: 120px;
+    width: 120px;
+}
+
+#poke-name {
+    padding:0;
+    margin: 0;
+}
+
+#hero-id {
+    font-weight: 600;
+    color: var(--h2-color);
+    padding:0;
+    margin: 0;
+}
+
+#type-button-container {
+    display: flex;
+    gap: 16px 8px;
+    flex-wrap: wrap;
+}
+
+.type-button {
+    color: #ffffff;
+    display: flex;
+    border-style: none;
+    height: 32px !important;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Exo', sans-serif;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    gap: 8px;
+}
+
+.type-button span::first-letter {
+    text-transform: uppercase;
+}
+
+.icon-type {
+    height: 24px;
+    width: auto;
+    fill: #ffffff;
+}
+
+.button-poison{
+    background-color: var(--poison-dark);
+    
+}
+
+.button-grass{
+    background-color: var(--grass-dark);
+}
+
+
+/* |||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||   Navigation      |||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||  */
+
+.tab-navigation {
+    
+    margin:0;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 24px;
+    margin-right: 24px;
+    padding: 0;
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    gap: 48px;
+}
+
+.tab-button {
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    border-style: none;
+    background-color:#ffffff00;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: var(--copy-color)
+}
+
+.tab-button.active {
+    font-weight: 600;
+    border-style: none;
+    border-style: solid;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1;
+    border-width: 3px;
+    
+    
+}
+
+
+/* |||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||   CARD-CONTENT    |||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||  */
+
+#card-content{
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 24px;
+}
+
+/* |||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||       ABOUT     ||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||  */
+
+.overview {
+    display: flex;
+    margin-top: 8px;
+    gap: 8px;
+    flex-direction: column;
+}
+
+.row-about {
+    display: flex;
+    
+}
+
+.left-row-about {
+    font-weight: 600;
+    width: 104px;
+}

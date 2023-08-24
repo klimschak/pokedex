@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    font-family: 'Exo', sans-serif
+}
+
+h1 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 500;
+}
+
+#pokedex {
+    min-height: 50vh;
+    background-color:#a1044a;
+    color: white;
+    padding: 24px;
+}
+
+.info-container {
+    background-color: #ffffff;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -100px;
+    min-height: 100px;
+}
+
+#info-list {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+#info-list div{
+    display: flex;
+    gap: 16px;
+   
+    justify-content: space-between;
+
+}
+
+#poke-stats{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+#stat {
+    width: 300vw !important;
+    background-color: #a1044a;
+}
+
+#poke-stat {
+    display: flex;
+    gap: 16px;
+   
+    justify-content: space-between;
+}
