@@ -100,10 +100,11 @@ function renderPokemonInfo() {
   let pokeImgDefault = currentPokemon.sprites.front_default;
   let pokeImgShiny = currentPokemon.sprites.front_shiny;
   let pokeImgLarge = currentPokemon.sprites.other.dream_world.front_default;
-  //let pokeEvolution = currentEvolution.chain.evolves_to[0].species.name;
+  //let pokeEvolution = currentEvolution.chain.evolves_to[0].species.name  ;
 
 
   let characteristicDescription = getCharacteristicDescription();
+  characteristicDescription = getCharacteristicDescription();
 
 
 
