@@ -104,7 +104,7 @@ function renderPokemonInfo() {
 
 
   let characteristicDescription = getCharacteristicDescription();
-  characteristicDescription = getCharacteristicDescription();
+  
 
 
 
