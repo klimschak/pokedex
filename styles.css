@@ -190,3 +190,54 @@ h3 {
     font-weight: 600;
     width: 104px;
 }
+
+#evolutions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    ;
+}
+
+.row-evolution {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    border-radius: 500px;
+    padding-left: 0px;
+    height: 80px;
+}
+
+.row-evolution:nth-child(1){
+    padding-left: 0px;
+}
+
+.row-evolution:nth-child(2){
+    padding-left: 25%;
+}
+
+.row-evolution:nth-child(3){
+    padding-left: 50%;
+}
+
+
+.row-evolution {
+    background-color: aqua;
+}
+
+.left-row-evolution {
+    height: 80px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 500px;
+    width: 80px;
+    background-color: rgb(124, 237, 237);
+}
+
+.evo-image {
+    height: 48px;
+    width: auto;
+    
+}
