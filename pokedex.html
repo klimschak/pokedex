@@ -14,15 +14,17 @@
         rel="stylesheet">
 </head>
 
-<body onload="init()">
+<body onload="loadPokemons()">
+    <div id="header"><header>    
+        <img src="/img/poke_logo.svg" alt="">
+    </header></div>
+
+    <div id="overlay-container">
+
+    </div>
+    <div id="overview"></div>
     <div id="pokecard">
-        <div id="card-hero"></div>
-        <div class="tab-navigation">
-            <button class="tab-button active" id="about" data-tab="about" onclick="renderAbout()">About</button>
-            <button class="tab-button" id="stats" data-tab="stats" onclick="renderStats()">Stats</button>
-            <button class="tab-button" data-tab="abilities" onclick="renderAbilities()">Abilities</button>
-        </div>
-        <div id="card-content">
+        
 
         </div>
 
@@ -34,7 +36,7 @@
         <div id="info-list"></div>
         <div id="poke-stats"></div>
     </div>
-
+<button onclick="loadMorePokemons()">Load Moare</button>
 </body>
 
 </html>
