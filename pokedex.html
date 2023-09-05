@@ -15,28 +15,31 @@
 </head>
 
 <body onload="loadPokemons()">
-    <div id="header"><header>    
-        <img src="/img/poke_logo.svg" alt="">
-    </header></div>
-
-    <div id="overlay-container">
-
+    <div id="header">
+        <header>
+            <img class="logo" src="/img/poke_logo.svg" alt="">
+            <div id="search-container" class="d-none">
+                <div id="search-input-container">
+                    <input type="text" id="search-input"  oninput="filterNames()" placeholder="Search your Pokemon ...">
+                    <p id="input-notice" class="input-notice d-none">Enter at least 2 letters</p>
+                </div>
+                <img id="close-search" class="close-search d-none" src="/img/abort.svg" alt="" onclick="closeSearch()">
+                
+            
+            </div>
+        </header>
     </div>
-    <div id="overview"></div>
-    <div id="pokecard">
+
+    <div id="search-result-container" class="search-result-container d-none">
         
-
-        </div>
-
-
+        <div id="list-container"><ul id="pokelist">dsgsdfg</ul></div>
     </div>
 
+        <div id="overlay-container"></div>
+    <div id="overview"></div>
+    <div id="pokecard"></div>
+    
 
-    <div class="info-container">
-        <div id="info-list"></div>
-        <div id="poke-stats"></div>
-    </div>
-<button onclick="loadMorePokemons()">Load Moare</button>
 </body>
 
 </html>

@@ -1,28 +1,113 @@
-let currentPokemon;
-let currentAbility;
-
 let abilityUrl;
-let currentEvolution;
 let chainEvolution0;
-let chainEvolutionImg0;
 let chainEvolution1;
-let chainEvolutionImg1;
 let chainEvolution2;
+let chainEvolutionImg0;
+let chainEvolutionImg1;
 let chainEvolutionImg2;
-let pokeName = "bulbasaur";
-let pokeUrl;
+let currentAbility;
+let currentEvolution;
+let currentPokeCard;
+let currentPokemon;
+let isLoading = false; //Variable um das nachladen der Pokemons zu kontrollieren
 let pokeData;
 let pokeList;
-let currentPokeCard;
+let pokemonNamesArray = [];//Array in der die Namen aller Pokemons gespeichert werden
+let pokeName = "bulbasaur";
+let pokeUrl;
+let x = 1; // Start Variable für das Laden weitere Pokemon
+let y = 30; // Start Variable für das Laden weitere Pokemon
 
+
+async function fetchAllPokemonNames() { // erstelle Ein Array mit allen pokemons
+  const url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1010";
+  const response = await fetch(url);
+  const data = await response.json();
+
+  const pokemonNames = data.results.map(pokemon => pokemon.name);
+  return pokemonNames;
+}
+
+
+//Befüllen des Arrays
 fetchAllPokemonNames().then(names => {
-  console.log("Alle Pokemons:", names); // Hier hast du das Array mit den Namen der Pokémon
+  pokemonNamesArray = names; // Weise die Namen dem Array zu
+  console.log("Alle Pokemons:", pokemonNamesArray);
+  filterNames()
 });
-//loadPokemonList()
 
-// Start Variable für das Laden weitere Pokemon
-let x = 1;
-let y = 20;
+
+//Pokemonliste filtern für die Suche
+function filterNames() {
+  let search = document.getElementById('search-input').value;
+  search = search.toLowerCase();
+  console.log('filterNames:', search);
+  let list = document.getElementById(`pokelist`);
+  list.innerHTML = ``;
+  for (let i = 0; i < pokemonNamesArray.length; i++) {
+    const name = pokemonNamesArray[i];
+    
+    
+    if (search.length >= 2 && name.toLowerCase().includes(search)) {
+        list.innerHTML +=/*html*/ `<li onclick="setPokeName('${name}'), pokeDetails()">${name}<img src="/img/arrow_back.svg"></li>`
+        document.getElementById(`search-result-container`).classList.remove("d-none");
+        document.getElementById(`close-search`).classList.remove("d-none");
+        document.getElementById(`input-notice`).classList.add("d-none");  
+        
+        
+        
+      }
+           
+    if (search.length === 0) {
+      document.getElementById(`search-result-container`).classList.add("d-none");
+      document.getElementById(`close-search`).classList.add("d-none");
+      document.getElementById(`input-notice`).classList.add("d-none");
+
+    }
+    if (search.length === 1 ){
+      list.innerHTML =/*html*/ `<h2>Enter at least two letters.</h2>`
+      document.getElementById(`search-result-container`).classList.remove("d-none");
+      document.getElementById(`close-search`).classList.remove("d-none");
+      document.getElementById(`input-notice`).classList.add("d-none"); 
+
+  }
+  
+  
+    
+  }
+  if (search.length >= 2 && list.childElementCount === 0){
+    list.innerHTML =/*html*/ `<h2>Unfortunately, no results.<br /> Please check and modify your search.</h2>`
+    document.getElementById(`search-result-container`).classList.remove("d-none");
+    document.getElementById(`close-search`).classList.remove("d-none");
+    document.getElementById(`input-notice`).classList.add("d-none"); 
+    
+    }
+
+  
+
+
+  
+
+  
+}
+
+function closeSearch() {
+  document.getElementById("search-input").value = "";
+  document.getElementById(`search-result-container`).classList.add("d-none");
+  document.getElementById(`close-search`).classList.add("d-none");
+  document.getElementById(`input-notice`).classList.add("d-none");
+
+
+
+
+}
+
+
+
+
+
+
+
 
 let typeColors = [
   { type: "normal", color: "#C6C6A7" },
@@ -44,6 +129,8 @@ let typeColors = [
   { type: "steel", color: "#D1D1E0" },
   { type: "fairy", color: "#F4BDC9" }
 ];
+
+
 // Diese Funktion nimmt einen Typ als Parameter und gibt den zugehörigen Farbcode zurück
 function getColorCode(type) {
   // Durch Array-Durchlauf suchen wir nach einem Objekt, dessen Typ übereinstimmt
@@ -72,13 +159,16 @@ if (fireColorCode !== null) {
 }
 
 async function init() {
-  getPokeList()
-    await loadApiInfo(pokeName);
+
+  await loadApiInfo(pokeName);
 
   await renderCardHero()
-  
-  
+
+
 }
+
+
+
 
 // Funktion um Pokemonnamen zuzuordnen, um die richtigen Apis und die Pokedetails zu laden
 function setPokeName(newPokemon) {
@@ -115,14 +205,6 @@ async function loadApiInfoParam(apiName) {
   return apiData
 }
 
-async function getPokeList() {
-  let pokeUrl = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1010`;
-  let pokeResponse = await fetch(pokeUrl);
-  pokeList = await pokeResponse.json();
-  logList = pokeList.results[0];
-  console.log("Listeintrag:", logList);
-
-}
 
 
 
@@ -130,27 +212,27 @@ async function getPokeList() {
 async function renderCardHero() {
   pokeName = await currentPokemon.name;
   currentPokeCard = await currentPokemon;
-  
+
   let pokeID = currentPokemon.id;
   //Darstellung der ID je nach Größe der Zahl
   if (pokeID < 10) {
-          pokeID = "#000" + pokeID
+    pokeID = "#000" + pokeID
 
   }
   if (pokeID < 100) {
-          pokeID = "#00" + pokeID
+    pokeID = "#00" + pokeID
 
   }
   if (pokeID < 1000) {
-          pokeID = "#0" + pokeID
+    pokeID = "#0" + pokeID
 
   }
   if (pokeID >= 1000) {
-          pokeID = "#" + pokeID
+    pokeID = "#" + pokeID
 
   }
 
-  
+
   let pokeImgLarge = await currentPokemon.sprites.other['official-artwork'].front_default;
   document.getElementById("card-hero").innerHTML = /*html*/`
     <img src="${pokeImgLarge}" alt="" id="card-hero-image">
@@ -164,37 +246,37 @@ async function renderCardHero() {
     </div>
   `
   for (let j = 0; j < currentPokeCard.types.length; j++) {
-          let pokeType = await currentPokeCard.types[j].type.name;
-          document.getElementById(`type-button-container`).innerHTML += /*html*/`
+    let pokeType = await currentPokeCard.types[j].type.name;
+    document.getElementById(`type-button-container`).innerHTML += /*html*/`
           <button class="type-button ${pokeType}"><img class="type-button-icon" src="/img/${pokeType}.svg" alt=""><span>${pokeType}</span></button>
         
       `;
-      
-   }
-   let color01 = await currentPokeCard.types[0].type.name;
-      let color02;
 
-              if (currentPokemon.types[1]) {
-                      color02 = await currentPokeCard.types[1].type.name;
-              }
-              else {
-                      color02 = 0
-              }
+  }
+  let color01 = await currentPokeCard.types[0].type.name;
+  let color02;
 
-              let bgcolor01
-              let bgcolor02
+  if (currentPokemon.types[1]) {
+    color02 = await currentPokeCard.types[1].type.name;
+  }
+  else {
+    color02 = 0
+  }
 
-              if (color02 == 0) {
-                      bgcolor01 = getColorCode(color01);
-                      document.getElementById(`card-hero`).style.background = bgcolor01;
-              }
-              else {
-                      bgcolor01 = getColorCode(color01);
-                      bgcolor02 = getColorCode(color02);
+  let bgcolor01
+  let bgcolor02
 
-                      document.getElementById(`card-hero`).style.background = `linear-gradient(45deg, ${bgcolor01} 0%, ${bgcolor02})`;
-              }
-              await renderAbout()
+  if (color02 == 0) {
+    bgcolor01 = getColorCode(color01);
+    document.getElementById(`card-hero`).style.background = bgcolor01;
+  }
+  else {
+    bgcolor01 = getColorCode(color01);
+    bgcolor02 = getColorCode(color02);
+
+    document.getElementById(`card-hero`).style.background = `linear-gradient(45deg, ${bgcolor01} 0%, ${bgcolor02})`;
+  }
+  await renderAbout()
 }
 
 
@@ -204,15 +286,15 @@ async function renderAbout() {
   document.getElementById(`stats`).classList.remove("active");
   document.getElementById(`abilities`).classList.remove("active");
 
-  
+
   let pokeWeight = await currentPokeCard.weight;
   let pokeHeight = await currentPokeCard.height;
   let pokeBaseExp = await currentPokeCard.base_experience;
 
-  
- 
 
-  
+
+
+
   document.getElementById("card-content").innerHTML = /*html*/`
     
     <h3>Overview</h3>
@@ -222,8 +304,8 @@ async function renderAbout() {
       <div class="row-about"><div class="left-row-about">BaseEXP:</div><div class="right-row-about">${pokeBaseExp}</div></div>
     </div>
   `
- await loadApiEvolution();
-  await getEvolutions();
+  await loadApiEvolution(pokeName);
+
   document.getElementById("card-content").innerHTML +=
     /*html*/`
     <h3>Evolutions</h3>
@@ -246,8 +328,8 @@ async function renderAbout() {
 }
 
 
-async function loadApiEvolution() {
-  let speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokeName}`;
+async function loadApiEvolution(param) {
+  let speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${param}`;
   const speciesResponse = await fetch(speciesUrl);
   currentSpecies = await speciesResponse.json();
 
@@ -278,15 +360,6 @@ async function loadApiEvolution() {
 }
 
 
-function getEvolutions() {
-  for (let i = 0; i < currentEvolution.chain.evolves_to.length; i++) {
-    let pokeEvolution = currentEvolution.chain.evolves_to[i].species.name;
-    return pokeEvolution;
-  }
-}
-
-
-
 
 ////////// Stats-Section ////////////////
 function renderStats() {
@@ -304,15 +377,15 @@ function renderStats() {
     const statName = currentPokemon.stats[i].stat.name; // Statistikname
     const baseStat = currentPokemon.stats[i].base_stat; // Basiswert der Statistik
 
-    
+
 
     document.getElementById("poke-stat-container").innerHTML += /*html*/`
     <div class="poke-stat">
       <div class="statname">${statName}:</div> 
       <div class="statvalue" >${baseStat}</div>
-      <div id="statbar-container"><div class="statbar" id="statbar-${i}"></div></div>
+      <div class="statbar-container"><div class="statbar" id="statbar-${i}"></div></div>
     </div>`;
-     document.getElementById(`statbar-${i}`).style.width = `${baseStat*1.5}px`;
+    document.getElementById(`statbar-${i}`).style.width = `${baseStat * 1.5}px`;
   }
 }
 
@@ -354,29 +427,16 @@ async function loadAbility(id) {
 }
 
 
-// Parameter für Start und Endpunkt der For-Schleife um weitere Pokemonszuladen
-function loadPokemons() {
-  let start = x;
-  let end = y;
-  loadPokemonOverview(start, end);
-}
 
-
-//Wenn die Funktion ausgelöst wird der Start und Endpunkt der Schleife zum nachladen der Pokemons erhöht
-function loadMorePokemons() {
-  x = x + 20;
-  y = y + 20;
-  loadPokemons()
-}
 
 
 //Laden der Startansicht mit der Übersicht der Pokemons
 async function loadPokemonOverview(start, end) {
-  getPokeList()
+
   for (let i = start; i <= end; i++) {
     await loadApiInfo(i);
 
-    await loadApiEvolution();
+
     let pokeID = currentPokemon.id;
 
     //Darstellung der ID je nach Größe der Zahl
@@ -442,18 +502,10 @@ async function loadPokemonOverview(start, end) {
       }
     }
   }
+  isLoading = false; //Wenn die Pokemons geladen wurden, wird der Status auf false gesetzt. Es können nun weitere Pokemons geladen werden.
 }
 
 
-// erstelle Array mit allen pokemons
-async function fetchAllPokemonNames() {
-  const url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1010";
-  const response = await fetch(url);
-  const data = await response.json();
-
-  const pokemonNames = data.results.map(pokemon => pokemon.name);
-  return pokemonNames;
-}
 
 
 //Overlay mir Pokemondetails
@@ -485,3 +537,38 @@ function closeOverlay() {
 }
 
 
+// Parameter für Start und Endpunkt der For-Schleife um weitere Pokemonszuladen
+function loadPokemons() {
+
+
+  let start = x;
+  let end = y;
+  loadPokemonOverview(start, end);
+}
+
+
+//Wenn die Funktion ausgelöst wird der Start und Endpunkt der Schleife zum nachladen der Pokemons erhöht
+function loadMorePokemons() {
+  if (isLoading) return; // Wenn aktuell geladen wird, dann wird die Funktion abgebrochen
+
+  isLoading = true; // Wenn isLoading = false ist. Ist das nachladen erlaubt. der Status wird daher auf true gesetzt.
+  // Dein Code zum Laden der Pokémon
+
+  // Nachdem das Laden abgeschlossen ist:
+
+
+  x = x + 30;
+  y = y + 30;
+  loadPokemons()
+}
+
+window.addEventListener("scroll", function () {
+  const scrollPosition = window.innerHeight + window.scrollY;
+  const pageHeight = document.documentElement.scrollHeight;
+  const scrollPercentage = (scrollPosition / pageHeight) * 100;
+
+  //Hier wird geprüft, ob das Seitenende erreicht wurde und ob nicht gerade Pokemons nachgeladen werden
+  if (scrollPercentage >= 99 && !isLoading) {
+    loadMorePokemons();
+  }
+});
